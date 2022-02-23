@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1226487285
+    locked: 0
+  - name: Enemies
+    uniqueID: 3242428285
+    locked: 0
+  - name: Spells
+    uniqueID: 1941896085
+    locked: 0
+  - name: Foreground
+    uniqueID: 1303821519
+    locked: 0

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header ("Enemy Attributes")]
     public string type;
-    private int hp;
-
-
+    public int hp = 1;
 
     // Update is called once per frame
     void Update()
