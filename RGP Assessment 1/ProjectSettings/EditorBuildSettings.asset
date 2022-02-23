@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 504208296d1a8a44c8166752afb9639a
+  - enabled: 1
+    path: Assets/Scenes/DanEnemySpawnScene.unity
+    guid: 7fea5f0dac2824648b72dc1171ad44f3
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
