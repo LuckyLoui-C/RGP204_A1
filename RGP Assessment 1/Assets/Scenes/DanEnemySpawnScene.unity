@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 1860598066}
   - component: {fileID: 1860598065}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: EnemySpawnLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -785,6 +785,7 @@ MonoBehaviour:
   fireEnemy: {fileID: 5447352408475045269, guid: 9b5f1b2b2c069e74991a8c59f4c17501, type: 3}
   iceEnemy: {fileID: 4735374955144207173, guid: 2f753174bb93dbf41ab7e5e9c31b8a3d, type: 3}
   spawnPoint: {fileID: 1860598064}
+  timeToSpawn: 0
 --- !u!4 &1905378373
 Transform:
   m_ObjectHideFlags: 0

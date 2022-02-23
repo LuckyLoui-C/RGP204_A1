@@ -6,11 +6,15 @@ public class Enemy : MonoBehaviour
 {
     [Header ("Enemy Attributes")]
     public string type;
-    public int hp = 1;
+    public int HP = 1;
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (HP <= 0)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = null;
+            Destroy(this.gameObject);
+        }
     }
 }

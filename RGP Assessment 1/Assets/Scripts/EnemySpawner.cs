@@ -7,36 +7,50 @@ public class EnemySpawner : MonoBehaviour
     [Header("Enemies")]
     public Enemy fireEnemy;
     public Enemy iceEnemy;
+    
+    public static int numberOfEnemies = 5; // How many enemies in the level?
 
     [Header("Spawn Points")]
-    public GameObject spawnPoint;
+    public GameObject spawnPoint; // Location for each enemy to spawn
 
+    [Header("Arrays of Enemy Types & Spawnable Enemies")]
     private Enemy[] enemies = new Enemy[2]; // array to store enemies that we can add to
+    private Enemy[] enemiesToSpawn = new Enemy[numberOfEnemies]; // array of level's spawnable enemies
     
-    private float timeToSpawn; // How long before next enemy spawn
+    [Header("Timing and Rand Numbers")]
+    public float timeToSpawn = 5.0f; // How long before next enemy spawn
     private int randEnemy; // Allows for random spawning
 
-    // Start is called before the first frame update
     void Start()
     {
-        timeToSpawn = 3.0f;
-        // Add the enemies to the enemy array for spawning
-        enemies[0] = fireEnemy;
+        enemies[0] = fireEnemy; // TODO: Update if more enemies are added
         enemies[1] = iceEnemy;
+
+        // Add the enemies to the array of enemies
+        // that will be spawned for the level
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            randEnemy = Random.Range(1, enemies.Length + 1); // Get a random enemy
+
+            enemiesToSpawn[i] = enemies[randEnemy - 1]; // Put random number in the spawn array
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        randEnemy = Random.Range(0, enemies.Length + 1);
+        timeToSpawn -= 1.0f * Time.deltaTime; // countdown 1 second
         
-        timeToSpawn -= 1.0f * Time.deltaTime; // countdown 1 second each second
-        
+        // This if statement just spawns enemy,
+        // and then decreases number of enemies
+        // left in the level, resetting the countdown to spawn
         if (timeToSpawn <= 0.0f)
         {
-            Instantiate(enemies[randEnemy], spawnPoint.transform.position, spawnPoint.transform.rotation);
+            Instantiate(enemiesToSpawn[numberOfEnemies - 1], spawnPoint.transform.position, spawnPoint.transform.rotation);
             timeToSpawn = 5.0f;
+            numberOfEnemies--;
         }
         Debug.Log("Time to spawn: " + timeToSpawn);
+        Debug.Log("Enemies left: " + numberOfEnemies);
     }
 }
