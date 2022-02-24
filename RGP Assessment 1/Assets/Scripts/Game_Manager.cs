@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Game_Manager : MonoBehaviour
 {
+    public Enemy enemy;
+
     public enum State
     {
         Idle,
@@ -47,11 +49,15 @@ public class Game_Manager : MonoBehaviour
         {
             inputArray[i] = 0;
         }
+
+ 
     }
 
  
     void Update()
     {
+        enemy = FindObjectOfType<Enemy>();
+
         // Timer for dot and dash inputs
         if (countDown > 0)
         {
@@ -207,8 +213,8 @@ public class Game_Manager : MonoBehaviour
         {
             Debug.Log("F");
             // do cool things
-
-
+            enemy.die();
+         
 
             /////
             resetInputs();

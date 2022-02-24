@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header ("Enemy Attributes")]
+    [Header("Enemy Attributes")]
     public string type;
     public int HP = 1;
 
-    void Update()
+    //void Update()
+    //{
+    //    if (HP <= 0)
+    //    {
+    //        this.GetComponent<SpriteRenderer>().sprite = null; // Replace with particle effect
+    //        Destroy(this.gameObject);
+    //    }
+    //}
+
+
+    public void die()
     {
-        if (HP <= 0)
-        {
-            this.GetComponent<SpriteRenderer>().sprite = null; // Replace with particle effect
-            Destroy(this.gameObject);
-        }
+        this.GetComponent<SpriteRenderer>().sprite = null; // Replace with particle effect
+        Debug.Log("Dead");
+        Destroy(this.gameObject);
     }
 }
