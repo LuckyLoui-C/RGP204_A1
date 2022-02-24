@@ -36,7 +36,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeToSpawn -= 1.0f * Time.deltaTime; // countdown 1 second
