@@ -21,7 +21,8 @@ public class Enemy : MonoBehaviour
     public void die()
     {
         this.GetComponent<SpriteRenderer>().sprite = null; // Replace with particle effect
-        Debug.Log("Dead");
+        Debug.Log("Enemy Dead");
+        this.HP = 0;
         Destroy(this.gameObject);
     }
 }
