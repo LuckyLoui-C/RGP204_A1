@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [HideInInspector]
     public Enemy enemyInScene;
     
-    public static int numberOfEnemies = 5; // How many enemies in the level?
+    public static int numberOfEnemies = 10; // How many enemies in the level?
 
     [Header("Spawn Points")]
     public GameObject spawnPoint; // Location for each enemy to spawn
