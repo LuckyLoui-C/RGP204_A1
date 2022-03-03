@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class Game_Manager : MonoBehaviour
 {
     public Enemy enemy;
+    private int enemiesRemaining = 10;
+    public Text gameOver;
     [HideInInspector]
     public CountdownTimer countdownTimer;
     public bool gameIsRunning;
@@ -18,6 +20,17 @@ public class Game_Manager : MonoBehaviour
         Dot,
         Dash
     }
+
+    private enum Element
+    {
+        NONE,
+        FIRE,
+        WATER,
+        ICE,
+        UNKNOWN
+    }
+
+    Element currentElement = Element.NONE;
 
     public Text timer;
     public Text dotsDashesUI;
@@ -53,7 +66,6 @@ public class Game_Manager : MonoBehaviour
             inputArray[i] = 0;
         }
         gameIsRunning = true;
- 
     }
 
  
@@ -102,8 +114,6 @@ public class Game_Manager : MonoBehaviour
             // Debug Text
             Debug.Log("Dash");
             dotsDashesUI.text = "Dash";
-           
-
             // have an iterator that goes up when an input is entered
             inputArray[currentInput] = 2;
             inputs[currentInput].text = "__";
@@ -130,7 +140,22 @@ public class Game_Manager : MonoBehaviour
             Debug.Log(inputArray[3].ToString());
         }
 
+        // Check the current enemies type! And save it in currentElement
+        if (enemy.type == "fire")
+        {
+            currentElement = Element.FIRE;
+        }
+        if (enemy.type == "ice")
+        {
+            currentElement = Element.ICE;
+        }
+        if (enemy.type == "water")
+        {
+            currentElement = Element.WATER;
+        }
+
         // Casts the corresponding spells and resets the currentInput & array
+        // Doesn't run until there are 4 inputs
         if (inputArray[3] > 0)
         {
             morseCodeReader();
@@ -139,6 +164,12 @@ public class Game_Manager : MonoBehaviour
             inputArray[2] = 0;
             inputArray[3] = 0;
             resetInputs();
+        }
+
+        // Game over
+        if (enemiesRemaining < 1)
+        {
+            gameOver.text = "YOU WIN!";
         }
         
     }
@@ -201,53 +232,157 @@ public class Game_Manager : MonoBehaviour
         underline4.gameObject.SetActive(false);
     }
    
+    // Morse Code Reader Function
+    // This function currently only deals with the morse code letters with 4 inputs
+    // With 3 working letters, C, H and F, as Ice, Water and Fire. 
+    // All other letters reset the inputs back to 0
+    // * NOTE * 
+    // Is only called after a fourth input has been entered
+    // Checks if the current enemy is weak against the inputted code and destroys the enemy if it is.
     void morseCodeReader()
     {
-        // If the inputs are anything from the Morse Code Alphabet (currently only F works, everything else just resets it)
         //A   1 2
         //B   2 1 1 1
-        //C   2 1 2 1
+        if (inputArray[0] == 2 &&
+          inputArray[1] == 1 &&
+          inputArray[2] == 1 &&
+          inputArray[3] == 1)
+        {
+            Debug.Log("B");
+            resetInputs();
+        }
+        //C   2 1 2 1 - ICE
+        if (inputArray[0] == 2 &&
+          inputArray[1] == 1 &&
+          inputArray[2] == 2 &&
+          inputArray[3] == 1)
+        { // Check if the current enemy is weak against the input code
+            if (currentElement == Element.WATER) // Ice beats water
+            {
+                enemy.die();
+                enemiesRemaining--;
+                countdownTimer.timerIsRunning = true;
+                currentElement = Element.NONE;
+            }
+            Debug.Log("C");
+            resetInputs();
+        }
         //D   2 1 1
         //E   1
-        //F   1 1 2 1
+        //F   1 1 2 1 - Fire
         if (inputArray[0] == 1 &&
             inputArray[1] == 1 &&
             inputArray[2] == 2 &&
             inputArray[3] == 1)
-        {
+        { 
+            if (currentElement == Element.ICE) // Fire beats ice
+            {
+                enemy.die();
+                enemiesRemaining--;
+                countdownTimer.timerIsRunning = true;
+                currentElement = Element.NONE;
+            }
             Debug.Log("F");
-            // do cool things
-            enemy.die();
-            countdownTimer.timerIsRunning = true;
-
-            /////
             resetInputs();
         }
-        else
-        {
-            // reset everything 
-            resetInputs();
-        }
-
         //G   2 2 1
-        //H   1 1 1 1
+        //H   1 1 1 1 - Water
+        if (inputArray[0] == 1 &&
+            inputArray[1] == 1 &&
+            inputArray[2] == 1 &&
+            inputArray[3] == 1)
+        {
+            if (currentElement == Element.FIRE) // Water beats fire
+            {
+                enemy.die();
+                enemiesRemaining--;
+                countdownTimer.timerIsRunning = true;
+                currentElement = Element.NONE;
+            }
+            Debug.Log("H");
+            resetInputs();
+        }
         //I   1 1
         //J   1 2 2 2
+        if (inputArray[0] == 1 &&
+        inputArray[1] == 2 &&
+        inputArray[2] == 2 &&
+        inputArray[3] == 2)
+        {
+            Debug.Log("J");
+            resetInputs();
+        }
         //K   2 1 2
         //L   1 2 1 1
+        if (inputArray[0] == 1 &&
+        inputArray[1] == 2 &&
+        inputArray[2] == 1 &&
+        inputArray[3] == 1)
+        {
+            Debug.Log("L");
+            resetInputs();
+        }
         //M   2 2
         //N   2 1
         //O   2 2 2
         //P   1 2 2 1
+        if (inputArray[0] == 1 &&
+        inputArray[1] == 2 &&
+        inputArray[2] == 2 &&
+        inputArray[3] == 1)
+        {
+            Debug.Log("P");
+            resetInputs();
+        }
         //Q   2 2 1 2
+        if (inputArray[0] == 2 &&
+        inputArray[1] == 2 &&
+        inputArray[2] == 1 &&
+        inputArray[3] == 2)
+        {
+            Debug.Log("Q");
+            resetInputs();
+        }
         //R   1 2 1
         //S   1 1 1
         //T   2
         //U   1 1 2
         //V   1 1 1 2
+        if (inputArray[0] == 1 &&
+        inputArray[1] == 1 &&
+        inputArray[2] == 1 &&
+        inputArray[3] == 2)
+        {
+            Debug.Log("V");
+            resetInputs();
+        }
         //W   1 2 2
         //X   2 1 1 2
+        if (inputArray[0] == 2 &&
+        inputArray[1] == 1 &&
+        inputArray[2] == 1 &&
+        inputArray[3] == 2)
+        {
+            Debug.Log("X");
+            resetInputs();
+        }
         //Y   2 1 2 2
+        if (inputArray[0] == 2 &&
+        inputArray[1] == 1 &&
+        inputArray[2] == 2 &&
+        inputArray[3] == 2)
+        {
+            Debug.Log("Y");
+            resetInputs();
+        }
         //Z   2 2 1 1
+        if (inputArray[0] == 2 &&
+        inputArray[1] == 2 &&
+        inputArray[2] == 1 &&
+        inputArray[3] == 1)
+        {
+            Debug.Log("Z");
+            resetInputs();
+        }
     }
 }

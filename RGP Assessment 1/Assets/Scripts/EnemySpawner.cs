@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Enemies")]
     public Enemy fireEnemy;
     public Enemy iceEnemy;
+    public Enemy waterEnemy;
     [HideInInspector]
     public Enemy enemyInScene;
     
@@ -17,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject spawnPoint; // Location for each enemy to spawn
 
     [Header("Arrays of Enemy Types & Spawnable Enemies")]
-    private Enemy[] enemies = new Enemy[2]; // array to store enemies that we can add to
+    private Enemy[] enemies = new Enemy[3]; // array to store enemies that we can add to
     private Enemy[] enemiesToSpawn = new Enemy[numberOfEnemies]; // array of level's spawnable enemies
 
     [Header("Timing and Rand Numbers")]
@@ -30,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
         countdownTimer = FindObjectOfType<CountdownTimer>();
         enemies[0] = fireEnemy; // TODO: Update if more enemies are added
         enemies[1] = iceEnemy;
+        enemies[2] = waterEnemy;
 
         // Add the enemies to the array of enemies
         // that will be spawned for the level
